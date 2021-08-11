@@ -41,13 +41,13 @@ def process(frame):
 
     # настройка квадрата, флаг - переключение позиции квадрата
     width, height, channels = frame.shape
-    if flag == 0:
+    if square_position == 0:
         start_point = (int(height / 2 - rect_size / 2), int(width / 2 - rect_size / 2))
         end_point = (int(height / 2 + rect_size / 2), int(width / 2 + rect_size / 2))
-    if flag == 1:
+    if square_position == 1:
         start_point = (int(height / 4 - rect_size / 2), int(width / 4 - rect_size / 2))
         end_point = (int(height / 4 + rect_size / 2), int(width / 4 + rect_size / 2))
-    if flag == 2:
+    if square_position == 2:
         start_point = (int(height / 1.25 - rect_size / 2), int(width / 1.25 - rect_size / 2))
         end_point = (int(height / 1.25 + rect_size / 2), int(width / 1.25 + rect_size / 2))
     color = (255, 0, 0)
@@ -145,10 +145,10 @@ def process(frame):
 
 print('Press 4 to Quit the Application, Press 5 to Switch rectangle position\n')
 
-# Open Default Camera вместо 0
-cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=4), cv2.CAP_GSTREAMER)  # gstreamer_pipeline(flip_method=4), cv2.CAP_GSTREAMER)
+# Open Default Camera (вместо 0 подставить значение из комментария для работы камеры на контроллере)
+cap = cv2.VideoCapture(0)  # gstreamer_pipeline(flip_method=4), cv2.CAP_GSTREAMER)
 
-flag = 0
+square_position = 0
 
 # флаг отвечает за номер квадрата. На 5 переключение, на 4 закрытие программы
 while (cap.isOpened()):
@@ -167,8 +167,7 @@ while (cap.isOpened()):
     k = cv2.waitKey(1) & 0xFF
     if k == 53:  # ord 5 (I hope)
         # Switch
-        flag = (flag + 1) % 3
-        print(flag)
+        square_position = (square_position + 1) % 3
     if k == 52:  # ord 4
         # Quit
         print('Good Bye!')
